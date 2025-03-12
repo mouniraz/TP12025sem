@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -48,8 +50,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TP12025sem2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                    ProfileCard(innerPadding)
+                    ProfileList(innerPadding)
                 }
             }
         }
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun ProfileCard(padding: PaddingValues) {
+fun ProfileCard(padding: PaddingValues,person: Person) {
     Box(
         modifier = Modifier
             .padding(padding)
@@ -94,17 +95,30 @@ fun ProfileCard(padding: PaddingValues) {
 
             // Text
             Text(
-                text = "John Doe",
+                text = person.name,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
 
             Text(
-                text = "Android Developer",
+                text = person.job,
                 fontSize = 16.sp,
                 color = Color.Gray
             )
+        }
+    }
+}
+data class Person(val name:String, val job:String)
+@Composable
+fun ProfileList(padding: PaddingValues)
+{   val listPerson= arrayOf(Person("Mohamed Baklouti","Developper"),Person("Nadia Tmimi","Designer"),Person("Ahmed Tounsi","Developper"))
+
+    LazyColumn {
+        val personList=
+        items(listPerson){
+            person->
+            ProfileCard(padding,person)
         }
     }
 }
@@ -133,6 +147,6 @@ fun CounterApp(padding: PaddingValues) {
 @Composable
 fun GreetingPreview() {
     TP12025sem2Theme {
-        ProfileCard(padding = PaddingValues(20.dp))
+        ProfileCard(padding = PaddingValues(20.dp),Person("test","test"))
     }
 }
